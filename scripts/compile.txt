@@ -1,0 +1,1 @@
+whole project compile - gcc src/myOS.c src/scheduling/fcfs.c src/scheduling/srtf.c src/scheduling/roundrobin.c src/scheduling/priority.c -Iinclude -o myOS
