@@ -109,22 +109,67 @@ int main()
         //     printf("args[%d] = %s\n", i, args[i]);
         // }
 
+        // pid_t pid = fork();
+
+        // if (pid < 0) {
+        //     perror("Fork failed");
+        // }
+        // else if (pid == 0) {
+        //     // Child process
+        //     if (execvp(args[0], args) < 0) {
+        //         perror("Execution failed");
+        //     }
+        //     exit(1);
+        // }
+        // else {
+        //     // Parent process
+        //     wait(NULL);
+        // }
+
+
+        int background = 0;
+
+        // Check if last argument is "&"
+        for (int i = 0; args[i] != NULL; i++)
+        {
+            if (args[i + 1] == NULL && strcmp(args[i], "&") == 0)
+            {
+                background = 1;
+                args[i] = NULL; // Remove "&" from arguments
+            }
+        }
+
         pid_t pid = fork();
 
-        if (pid < 0) {
+        if (pid < 0)
+        {
             perror("Fork failed");
         }
-        else if (pid == 0) {
+        else if (pid == 0)
+        {
             // Child process
-            if (execvp(args[0], args) < 0) {
+            if (execvp(args[0], args) < 0)
+            {
                 perror("Execution failed");
             }
             exit(1);
         }
-        else {
+        else
+        {
             // Parent process
-            wait(NULL);
+            if (background)
+            {
+                printf("Process running in background with PID: %d\n", pid);
+                fflush(stdout);
+            }
+            else
+            {
+                wait(NULL);
+                fflush(stdout);
+            }
         }
+        
+        
 
         
     }

@@ -88,5 +88,4 @@ void run_fcfs() {
     printf("Average Waiting Time    : %.2f\n", total_wt/n);
     printf("Average Turnaround Time : %.2f\n", total_tat/n);
 
-    printf("\nReturning to myOS shell...\n");
 }
