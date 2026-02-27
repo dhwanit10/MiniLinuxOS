@@ -1,0 +1,23 @@
+1. Run Ubuntu Container with Volume Mount : 
+docker run -dit --name ubuntu_shell -v "C:\Users\Dhwanit\Desktop\myshell":/workspace ubuntu
+
+-v host_path:container_path
+
+Windows folder → /workspace inside Ubuntu
+
+
+2. Enter Container
+
+docker exec -it ubuntu_shell bash
+
+3. Install GCC (First Time Only)
+
+apt update
+apt install build-essential -y
+
+
+---- Dockerfile ----
+
+to build image = docker build -t myos_image .
+to run image = docker run -it myos_image
+
