@@ -5,7 +5,7 @@ import sys
 
 def agent():
 
-    client = genai.Client(api_key="AIzaSyBOKlLxXZroXjJO43SNf1-1hYFOtN_wm9Q")
+    client = genai.Client(api_key="your-api-key")
 
     prompt = sys.argv[1]
 
