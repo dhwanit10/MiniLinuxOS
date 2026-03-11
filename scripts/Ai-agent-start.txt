@@ -1,0 +1,56 @@
+1. Install Python venv support (Linux)
+
+Some systems need this package first.
+
+-> sudo apt update
+-> sudo apt install python3-venv
+
+
+2. Create Virtual Environment
+
+Run this inside your project directory:
+
+-> python3 -m venv venv
+
+This creates:
+
+venv/
+ ├── bin/
+ ├── lib/
+ └── include/
+
+
+3. Activate the Virtual Environment
+
+-> source venv/bin/activate
+
+Your terminal will show something like:
+
+(venv) user@system:~/project$
+
+
+4. Upgrade pip (recommended)
+
+-> pip install --upgrade pip
+
+
+5. Install Gemini Python Library
+
+Install the official SDK:
+
+-> pip install google-genai
+
+This is the library used by your code:
+
+from google import genai
+
+
+6. Verify Installation
+
+Check if the package is installed:
+
+-> pip list
+
+You should see:
+
+google-genai

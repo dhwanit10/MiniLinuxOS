@@ -2,12 +2,118 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <dirent.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include "scheduling.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
-#define MAX_INPUT 1024
+// #define MAX_INPUT 1024
 #define MAX_ARGS 64
+
+/* -------------------------------
+   Command list for autocomplete
+--------------------------------*/
+
+char *commands[] = {
+    "ls",
+    "cd",
+    "pwd",
+    "mkdir",
+    "rmdir",
+    "git",
+    "add",
+    "status",
+    "top",
+    "commit",
+    "push",
+    "pull",
+    "rm",
+    "top",
+    "touch",
+    "cat",
+    "nano",
+    "clear",
+    "cpu",
+    "fcfs",
+    "srtf",
+    "RR",
+    "priority",
+    "exit",
+    NULL
+};
+
+char *file_generator(const char *text, int state)
+{
+    static DIR *dir;
+    static struct dirent *entry;
+    static int len;
+
+    if (!state)
+    {
+        dir = opendir(".");
+        len = strlen(text);
+    }
+
+    if (!dir)
+        return NULL;
+
+    while ((entry = readdir(dir)) != NULL)
+    {
+        if (strncmp(entry->d_name, text, len) == 0)
+        {
+            return strdup(entry->d_name);
+        }
+    }
+
+    closedir(dir);
+    return NULL;
+}
+
+/* -------------------------------
+   Autocomplete generator
+--------------------------------*/
+
+char *command_generator(const char *text, int state)
+{
+    static int index, len;
+    char *name;
+
+    if (!state)
+    {
+        index = 0;
+        len = strlen(text);
+    }
+
+    while ((name = commands[index++]))
+    {
+        if (strncmp(name, text, len) == 0)
+        {
+            return strdup(name);
+        }
+    }
+
+    return NULL;
+}
+
+/* -------------------------------
+   Completion function
+--------------------------------*/
+
+char **command_completion(const char *text, int start, int end)
+{
+    if (start == 0)
+    {
+        return rl_completion_matches(text, command_generator);
+    }
+
+    return NULL;
+}
+
+/* -------------------------------
+   Parse user input
+--------------------------------*/
 
 void parse_input(char *input, char *args[])
 {
@@ -24,42 +130,54 @@ void parse_input(char *input, char *args[])
     args[i] = NULL;
 }
 
+/* -------------------------------
+   Main shell
+--------------------------------*/
+
 int main()
 {
-    char input[MAX_INPUT];
+    char *input;
     char *args[MAX_ARGS];
+
+    /* Enable TAB completion */
+    rl_attempted_completion_function = command_completion;
 
     while (1)
     {
 
-        printf("myOS> ");
-        fflush(stdout);
+        input = readline("myOS> ");
 
-        if (fgets(input, sizeof(input), stdin) == NULL)
+        if (input == NULL)
         {
             printf("\nExiting myOS...\n");
             break;
         }
 
-        input[strcspn(input, "\n")] = 0;
-
         if (strlen(input) == 0)
         {
+            free(input);
             continue;
         }
+
+        /* Save command in history */
+        add_history(input);
 
         parse_input(input, args);
 
         if (strcmp(args[0], "exit") == 0)
         {
             printf("Exiting myOS...\n");
+            free(input);
             break;
         }
+
+        /* -------------------------------
+           CD command
+        --------------------------------*/
 
         if (strcmp(args[0], "cd") == 0)
         {
 
-            // cd with no argument → go home
             if (args[1] == NULL)
             {
                 chdir(getenv("HOME"));
@@ -70,8 +188,13 @@ int main()
                     perror("cd");
             }
 
+            free(input);
             continue;
         }
+
+        /* -------------------------------
+           CPU scheduling commands
+        --------------------------------*/
 
         if (strcmp(args[0], "cpu") == 0)
         {
@@ -101,43 +224,40 @@ int main()
                 printf("Unknown algorithm: %s\n", args[1]);
             }
 
+            free(input);
             continue;
         }
 
-        // printf("parsed arguments: \n");
-        // for (int i = 0; args[i] != NULL; i++) {
-        //     printf("args[%d] = %s\n", i, args[i]);
-        // }
+        /*--------------------------------
+            Ai Agent code       
+        ----------------------------------*/
 
-        // pid_t pid = fork();
-
-        // if (pid < 0) {
-        //     perror("Fork failed");
-        // }
-        // else if (pid == 0) {
-        //     // Child process
-        //     if (execvp(args[0], args) < 0) {
-        //         perror("Execution failed");
-        //     }
-        //     exit(1);
-        // }
-        // else {
-        //     // Parent process
-        //     wait(NULL);
-        // }
-
-
-        int background = 0;
-
-        // Check if last argument is "&"
-        for (int i = 0; args[i] != NULL; i++)
+        if (strcmp(args[0], "code") == 0)
         {
-            if (args[i + 1] == NULL && strcmp(args[i], "&") == 0)
-            {
-                background = 1;
-                args[i] = NULL; // Remove "&" from arguments
-            }
+            char problem[1024];
+        
+            printf("Enter problem statement:\n");
+            fgets(problem, sizeof(problem), stdin);
+        
+            problem[strcspn(problem, "\n")] = 0;
+        
+            char command[2048];
+        
+            sprintf(command,
+                "./venv/bin/python ai-agent.py \"%s\" > generated_code.txt",
+                problem);
+            
+            system(command);
+            
+            printf("Code generated and saved to generated_code.txt\n");
+            
+            free(input);
+            continue;
         }
+
+        /* -------------------------------
+           Execute normal Linux command
+        --------------------------------*/
 
         pid_t pid = fork();
 
@@ -147,7 +267,6 @@ int main()
         }
         else if (pid == 0)
         {
-            // Child process
             if (execvp(args[0], args) < 0)
             {
                 perror("Execution failed");
@@ -156,22 +275,11 @@ int main()
         }
         else
         {
-            // Parent process
-            if (background)
-            {
-                printf("Process running in background with PID: %d\n", pid);
-                fflush(stdout);
-            }
-            else
-            {
-                wait(NULL);
-                fflush(stdout);
-            }
+            wait(NULL);
         }
-        
-        
 
-        
+        free(input);
+
     }
 
     return 0;

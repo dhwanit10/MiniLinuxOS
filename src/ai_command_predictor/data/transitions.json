@@ -1,0 +1,225 @@
+{
+    "ls": {
+        "cd": 10,
+        "cat": 8,
+        "vim": 6,
+        "rm": 5,
+        "cp": 5,
+        "mv": 5,
+        "chmod": 4,
+        "grep": 4,
+        "less": 3
+    },
+    "cd": {
+        "ls": 12,
+        "pwd": 8,
+        "git status": 6,
+        "cat": 5,
+        "vim": 5,
+        "mkdir": 4,
+        "touch": 4
+    },
+    "git status": {
+        "git add .": 10,
+        "git diff": 9,
+        "git log": 7,
+        "git stash": 5,
+        "git checkout": 5
+    },
+    "git add .": {
+        "git commit -m": 12,
+        "git status": 6,
+        "git diff --cached": 5
+    },
+    "git commit -m": {
+        "git push": 12,
+        "git log": 7,
+        "git status": 5
+    },
+    "git push": {
+        "git status": 8,
+        "git log": 7,
+        "git pull": 5
+    },
+    "git pull": {
+        "git status": 9,
+        "git log": 6,
+        "git branch": 5
+    },
+    "git log": {
+        "git diff": 8,
+        "git checkout": 7,
+        "git status": 6
+    },
+    "mkdir": {
+        "cd": 10,
+        "ls": 6,
+        "touch": 5
+    },
+    "touch": {
+        "vim": 10,
+        "cat": 7,
+        "ls": 6,
+        "nano": 5
+    },
+    "vim": {
+        "ls": 8,
+        "cat": 7,
+        "git status": 6,
+        "git add .": 5
+    },
+    "nano": {
+        "ls": 8,
+        "cat": 7,
+        "git status": 6
+    },
+    "cat": {
+        "grep": 9,
+        "less": 7,
+        "vim": 6,
+        "ls": 5
+    },
+    "grep": {
+        "ls": 7,
+        "cat": 6,
+        "vim": 5,
+        "less": 4
+    },
+    "pwd": {
+        "ls": 10,
+        "cd": 8
+    },
+    "cp": {
+        "ls": 9,
+        "cd": 5,
+        "cat": 5
+    },
+    "mv": {
+        "ls": 9,
+        "cd": 5
+    },
+    "rm": {
+        "ls": 10,
+        "cd": 4
+    },
+    "chmod": {
+        "ls -l": 10,
+        "ls": 7
+    },
+    "ls -l": {
+        "cd": 8,
+        "chmod": 6,
+        "cat": 5,
+        "grep": 5
+    },
+    "pip install": {
+        "python": 10,
+        "pip list": 7
+    },
+    "python": {
+        "pip install": 6,
+        "ls": 5,
+        "cat": 4
+    },
+    "make": {
+        "make install": 9,
+        "make clean": 8,
+        "ls": 5
+    },
+    "make install": {
+        "ls": 8,
+        "make clean": 5
+    },
+    "make clean": {
+        "make": 9,
+        "ls": 6
+    },
+    "docker ps": {
+        "docker logs": 8,
+        "docker exec": 7,
+        "docker stop": 6
+    },
+    "docker build": {
+        "docker run": 10,
+        "docker images": 7
+    },
+    "docker run": {
+        "docker ps": 10,
+        "docker logs": 7,
+        "docker stop": 5
+    },
+    "ssh": {
+        "ls": 9,
+        "cd": 7,
+        "pwd": 5
+    },
+    "curl": {
+        "cat": 7,
+        "grep": 7,
+        "ls": 5
+    },
+    "wget": {
+        "ls": 9,
+        "cat": 6,
+        "chmod": 5
+    },
+    "tar": {
+        "ls": 9,
+        "cd": 7
+    },
+    "sudo apt update": {
+        "sudo apt upgrade": 10,
+        "sudo apt install": 8
+    },
+    "sudo apt install": {
+        "ls": 7,
+        "which": 7,
+        "sudo apt update": 5
+    },
+    "find": {
+        "grep": 9,
+        "cat": 7,
+        "ls": 5
+    },
+    "ps aux": {
+        "kill": 9,
+        "grep": 7
+    },
+    "kill": {
+        "ps aux": 9,
+        "ls": 5
+    },
+    "history": {
+        "grep": 9,
+        "ls": 7
+    },
+    "clear": {
+        "ls": 9,
+        "cd": 7,
+        "git status": 5
+    },
+    "df -h": {
+        "du -sh": 7,
+        "ls": 6
+    },
+    "du -sh": {
+        "df -h": 5,
+        "ls": 8
+    },
+    "env": {
+        "export": 7,
+        "echo": 6
+    },
+    "export": {
+        "echo": 8,
+        "env": 5
+    },
+    "crontab -e": {
+        "crontab -l": 10,
+        "ls": 6
+    },
+    "source": {
+        "ls": 7,
+        "env": 5
+    }
+}
