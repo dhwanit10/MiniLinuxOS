@@ -1,10 +1,18 @@
 from google import genai
 import sys
+from dotenv import load_dotenv
+import os
+
+# Load the .env file
+load_dotenv()
+
+# Fetch the API key
+gemini_api_key = os.getenv("api_key")
 
 
 def agent():
 
-    client = genai.Client(api_key="api-key")
+    client = genai.Client(api_key=gemini_api_key)
 
     prompt = sys.argv[1]
 

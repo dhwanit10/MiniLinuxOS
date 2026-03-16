@@ -1,1 +1,3 @@
-whole project compile - gcc src/myOS.c src/scheduling/fcfs.c src/scheduling/srtf.c src/scheduling/roundrobin.c src/scheduling/priority.c -Iinclude -o myOS -lreadline -lm
+whole project compile - gcc src/myOS.c src/thread-process/thread.c src/scheduling/fcfs.c src/scheduling/srtf.c src/scheduling/roundrobin.c src/scheduling/priority.c -Iinclude -o myOS -lreadline -lm -pthread
+
+gcc thread.c -o pt -pthread -lreadline

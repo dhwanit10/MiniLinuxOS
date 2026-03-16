@@ -6,6 +6,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include "scheduling.h"
+#include "thread.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -221,6 +222,26 @@ int main()
             else
             {
                 printf("Unknown algorithm: %s\n", args[1]);
+            }
+
+            free(input);
+            continue;
+        }
+
+        if (strcmp(args[0], "thread") == 0)
+        {
+
+            if (args[1] == NULL)
+            {
+                printf("Usage: thread process\n");
+            }
+            else if (strcmp(args[1], "process") == 0)
+            {
+                run_thread();
+            }
+            else
+            {
+                printf("Unknown command: %s\n", args[1]);
             }
 
             free(input);
