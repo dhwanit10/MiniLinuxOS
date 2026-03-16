@@ -1,110 +1,156 @@
 #include <stdio.h>
-#include <limits.h>
+#include <float.h>
+#include <stdbool.h>
+#include <math.h>
+#include <stdlib.h>
 
 #define MAX 100
+#define EPS 0.00001
 
-struct Process {
-    int pid;
-    int at;
-    int bt;
-    int rt;
-    int ct;
-    int tat;
-    int wt;
-};
 
-void run_srtf() {
+int run_srtf() {
+
+    FILE *fp  = fopen("gantt_data.txt","w");
 
     int n;
-    struct Process p[MAX];
 
-    printf("Enter number of processes: ");
-    scanf("%d", &n);
+    do {
+        printf("Enter number of processes (1-100): ");
+        scanf("%d", &n);
+        if(n <= 0 || n > MAX)
+            printf("Invalid! Enter between 1 and 100.\n");
+    } while(n <= 0 || n > MAX);
 
-    // INPUT 
+    int pid[MAX];
+    float at[MAX], bt[MAX], rt[MAX], ct[MAX], tat[MAX], wt[MAX];
+
     for(int i = 0; i < n; i++) {
 
-        p[i].pid = i + 1;
+        pid[i] = i + 1;
 
-        printf("\nProcess P%d\n", i+1);
+        printf("\nProcess %d\n", pid[i]);
 
-    
         do {
             printf("Arrival Time (>=0): ");
-            scanf("%d", &p[i].at);
+            scanf("%f", &at[i]);
+            if(at[i] < 0)
+                printf("Arrival time cannot be negative.\n");
+        } while(at[i] < 0);
 
-            if(p[i].at < 0)
-                printf("Invalid! Arrival time cannot be negative.\n");
-
-        } while(p[i].at < 0);
-
-    
         do {
             printf("Burst Time (>0): ");
-            scanf("%d", &p[i].bt);
+            scanf("%f", &bt[i]);
+            if(bt[i] <= 0)
+                printf("Burst time must be greater than 0.\n");
+        } while(bt[i] <= 0);
 
-            if(p[i].bt <= 0)
-                printf("Invalid! Burst time must be positive.\n");
-
-        } while(p[i].bt <= 0);
-
-        p[i].rt = p[i].bt;
+        rt[i] = bt[i];
     }
 
+    float time = 0;
     int completed = 0;
-    int current_time = 0;
+    int lastProcess = -1;
+    int contextSwitch = 0;
 
-    float total_wt = 0, total_tat = 0;
+    printf("\nExecution Timeline:\n");
 
-    // SRTF Scheduling
-    while(completed != n) {
+    while(completed < n) {
 
-        int idx = -1;
-        int min_rt = INT_MAX;
+        int current = -1;
+        float minRT = FLT_MAX;
 
+        // Select shortest remaining time process
         for(int i = 0; i < n; i++) {
-            if(p[i].at <= current_time && p[i].rt > 0 && p[i].rt < min_rt) {
-                min_rt = p[i].rt;
-                idx = i;
+
+            if(at[i] <= time + EPS && rt[i] > EPS) {
+
+                if(current == -1 ||
+                   rt[i] < minRT - EPS ||
+                   (fabs(rt[i] - minRT) < EPS && at[i] < at[current]) ||
+                   (fabs(rt[i] - minRT) < EPS && fabs(at[i] - at[current]) < EPS && pid[i] < pid[current])) {
+
+                    minRT = rt[i];
+                    current = i;
+                }
             }
         }
 
-        // CPU idle
-        if(idx == -1) {
-            current_time++;
+        // If no process available → Idle
+        if(current == -1) {
+
+            float nextArrival = FLT_MAX;
+
+            for(int i = 0; i < n; i++)
+                if(rt[i] > EPS && at[i] > time && at[i] < nextArrival)
+                    nextArrival = at[i];
+
+            printf("Idle (%.2f -> %.2f)\n", time, nextArrival);
+
+            fprintf(fp,"IDLE %.2f %.2f\n", time, nextArrival - time);
+
+            time = nextArrival;
             continue;
         }
 
-        // execute 1 unit
-        p[idx].rt--;
-        current_time++;
+        if(lastProcess != -1 && lastProcess != current)
+            contextSwitch++;
 
-        if(p[idx].rt == 0) {
+        // Find next arrival
+        float nextArrival = FLT_MAX;
+
+        for(int i = 0; i < n; i++)
+            if(at[i] > time && rt[i] > EPS && at[i] < nextArrival)
+                nextArrival = at[i];
+
+        float executeTime;
+
+        if(nextArrival == FLT_MAX)
+            executeTime = rt[current];
+        else
+            executeTime = fmin(rt[current], nextArrival - time);
+
+        printf("P%d (%.2f -> %.2f)\n",
+               pid[current], time, time + executeTime);
+
+        fprintf(fp,"P%d %.2f %.2f\n", pid[current], time, executeTime);
+
+        rt[current] -= executeTime;
+        time += executeTime;
+
+        if(rt[current] <= EPS) {
+
+            ct[current] = time;
+            tat[current] = ct[current] - at[current];
+            wt[current] = tat[current] - bt[current];
+
+            if(wt[current] < 0)
+                wt[current] = 0;
+
             completed++;
-
-            p[idx].ct = current_time;
-            p[idx].tat = p[idx].ct - p[idx].at;
-            p[idx].wt = p[idx].tat - p[idx].bt;
-
-            total_wt += p[idx].wt;
-            total_tat += p[idx].tat;
         }
+
+        lastProcess = current;
     }
 
-    // OUTPUT
-    printf("\n============================================================\n");
-    printf("PID\tAT\tBT\tCT\tTAT\tWT\n");
-    printf("============================================================\n");
+    float totalWT = 0, totalTAT = 0;
+
+    printf("\nPID\tAT\tBT\tCT\tTAT\tWT\n");
 
     for(int i = 0; i < n; i++) {
-        printf("P%d\t%d\t%d\t%d\t%d\t%d\n",
-               p[i].pid, p[i].at, p[i].bt,
-               p[i].ct, p[i].tat, p[i].wt);
+
+        totalWT += wt[i];
+        totalTAT += tat[i];
+
+        printf("P%d\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n",
+               pid[i], at[i], bt[i], ct[i], tat[i], wt[i]);
     }
 
-    printf("============================================================\n");
+    printf("\nAverage Waiting Time: %.2f\n", totalWT/n);
+    printf("Average Turnaround Time: %.2f\n", totalTAT/n);
+    printf("Total Context Switches: %d\n", contextSwitch);
 
-    printf("Average Waiting Time    : %.2f\n", total_wt/n);
-    printf("Average Turnaround Time : %.2f\n", total_tat/n);
+    fclose(fp);
 
+     system("./venv/bin/python src/scheduling/ganttchart.py");
+    return 0;
 }

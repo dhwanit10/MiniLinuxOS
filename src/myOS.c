@@ -41,8 +41,7 @@ char *commands[] = {
     "RR",
     "priority",
     "exit",
-    NULL
-};
+    NULL};
 
 char *file_generator(const char *text, int state)
 {
@@ -229,28 +228,66 @@ int main()
         }
 
         /*--------------------------------
-            Ai Agent code       
+            Ai Agent code
         ----------------------------------*/
 
         if (strcmp(args[0], "code") == 0)
         {
             char problem[1024];
-        
+
             printf("Enter problem statement:\n");
             fgets(problem, sizeof(problem), stdin);
-        
+
             problem[strcspn(problem, "\n")] = 0;
-        
+
             char command[2048];
-        
+
             sprintf(command,
-                "./venv/bin/python ai-agent.py \"%s\" > generated_code.txt",
-                problem);
-            
+                    "./venv/bin/python ai-agent.py \"%s\" > generated_code.txt",
+                    problem);
+
             system(command);
-            
+
             printf("Code generated and saved to generated_code.txt\n");
-            
+
+            free(input);
+            continue;
+        }
+
+        /*--------------------------------
+             GPT Chat Mode
+        ----------------------------------*/
+
+        if (strcmp(args[0], "gpt") == 0)
+        {
+            char prompt[1024];
+
+            printf("Entering GPT Chat Mode (type 'exit' to leave)\n");
+
+            while (1)
+            {
+                printf("gpt> ");
+                fgets(prompt, sizeof(prompt), stdin);
+
+                prompt[strcspn(prompt, "\n")] = 0;
+
+                if (strcmp(prompt, "exit") == 0)
+                {
+                    printf("Leaving GPT mode...\n");
+                    break;
+                }
+
+                char command[2048];
+
+                sprintf(command,
+                        "./venv/bin/python chat-gpt.py \"%s\"",
+                        prompt);
+
+                system(command);
+
+                printf("\n");
+            }
+
             free(input);
             continue;
         }
@@ -279,7 +316,6 @@ int main()
         }
 
         free(input);
-
     }
 
     return 0;
