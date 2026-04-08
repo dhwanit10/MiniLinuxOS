@@ -22,7 +22,7 @@ def agent():
 # )
 
     response = client.models.generate_content(
-        model="gemini-3-flash-preview",
+        model="gemini-3.1-flash-lite-preview",
         contents="Generate only code without explanation:\n" + prompt,
     )
 

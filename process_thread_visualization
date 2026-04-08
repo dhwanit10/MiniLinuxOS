@@ -1,55 +1,13 @@
 digraph Process_Thread {
 	fontsize=20 rankdir=LR
-	subgraph cluster_6526 {
-		color=green label="PROCESS 6526"
-		code6526 [label="Code (Program)" fillcolor=orange shape=box style=filled]
-		mem6526 [label="Memory / Data" fillcolor=lightblue shape=box style=filled]
-		res6526 [label="Resources (Files, I/O)" fillcolor=gold shape=box style=filled]
-		code6526 -> mem6526
-		mem6526 -> res6526
-		T6526_1 [label="Thread 1" fillcolor=lightgreen shape=box style=filled]
-		res6526 -> T6526_1
-	}
-	subgraph cluster_6528 {
-		color=green label="PROCESS 6528"
-		code6528 [label="Code (Program)" fillcolor=orange shape=box style=filled]
-		mem6528 [label="Memory / Data" fillcolor=lightblue shape=box style=filled]
-		res6528 [label="Resources (Files, I/O)" fillcolor=gold shape=box style=filled]
-		code6528 -> mem6528
-		mem6528 -> res6528
-		T6528_1 [label="Thread 1" fillcolor=lightgreen shape=box style=filled]
-		res6528 -> T6528_1
-		T6528_2 [label="Thread 2" fillcolor=lightgreen shape=box style=filled]
-		res6528 -> T6528_2
-	}
-	subgraph cluster_6531 {
-		color=green label="PROCESS 6531"
-		code6531 [label="Code (Program)" fillcolor=orange shape=box style=filled]
-		mem6531 [label="Memory / Data" fillcolor=lightblue shape=box style=filled]
-		res6531 [label="Resources (Files, I/O)" fillcolor=gold shape=box style=filled]
-		code6531 -> mem6531
-		mem6531 -> res6531
-		T6531_1 [label="Thread 1" fillcolor=lightgreen shape=box style=filled]
-		res6531 -> T6531_1
-		T6531_2 [label="Thread 2" fillcolor=lightgreen shape=box style=filled]
-		res6531 -> T6531_2
-		T6531_3 [label="Thread 3" fillcolor=lightgreen shape=box style=filled]
-		res6531 -> T6531_3
-	}
-	subgraph cluster_6535 {
-		color=green label="PROCESS 6535"
-		code6535 [label="Code (Program)" fillcolor=orange shape=box style=filled]
-		mem6535 [label="Memory / Data" fillcolor=lightblue shape=box style=filled]
-		res6535 [label="Resources (Files, I/O)" fillcolor=gold shape=box style=filled]
-		code6535 -> mem6535
-		mem6535 -> res6535
-		T6535_1 [label="Thread 1" fillcolor=lightgreen shape=box style=filled]
-		res6535 -> T6535_1
-		T6535_2 [label="Thread 2" fillcolor=lightgreen shape=box style=filled]
-		res6535 -> T6535_2
-		T6535_4 [label="Thread 4" fillcolor=lightgreen shape=box style=filled]
-		res6535 -> T6535_4
-		T6535_3 [label="Thread 3" fillcolor=lightgreen shape=box style=filled]
-		res6535 -> T6535_3
+	subgraph cluster_13101 {
+		color=green label="PROCESS 13101"
+		code13101 [label="Code (Program)" fillcolor=orange shape=box style=filled]
+		mem13101 [label="Memory / Data" fillcolor=lightblue shape=box style=filled]
+		res13101 [label="Resources (Files, I/O)" fillcolor=gold shape=box style=filled]
+		code13101 -> mem13101
+		mem13101 -> res13101
+		T13101_1 [label="Thread 1" fillcolor=lightgreen shape=box style=filled]
+		res13101 -> T13101_1
 	}
 }

@@ -313,6 +313,33 @@ int main()
             continue;
         }
 
+        /*--------------------------------
+             process manager mode
+        ----------------------------------*/
+
+        if (strcmp(args[0], "process") == 0)
+        {
+            char prompt[1024];
+
+            
+            if (args[1] == NULL)
+            {
+                printf("Usage: process manager\n");
+            }
+            else if (strcmp(args[1], "manager") == 0)
+            {
+                printf("Entering Process Manager Mode (type '5' to leave)\n");
+                system("./venv/bin/python src/process_manager.py");
+            }
+            else
+            {
+                printf("Unknown command: %s\n", args[1]);
+            }
+
+            free(input);
+            continue;
+        }
+
         /* -------------------------------
            Execute normal Linux command
         --------------------------------*/
