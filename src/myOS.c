@@ -130,6 +130,7 @@ void parse_input(char *input, char *args[])
     args[i] = NULL;
 }
 
+
 /* -------------------------------
    Main shell
 --------------------------------*/
@@ -163,7 +164,7 @@ int main()
         add_history(input);
 
         parse_input(input, args);
-
+        
         if (strcmp(args[0], "exit") == 0)
         {
             printf("Exiting myOS...\n");
@@ -248,6 +249,140 @@ int main()
             continue;
         }
 
+        if (strcmp(args[0], "disk") == 0)
+        {
+
+            if (args[1] == NULL)
+            {
+                printf("Usage: disk scheduling\n");
+            }
+            else if (strcmp(args[1], "scheduling") == 0)
+            {
+                system("./DSA/menu");
+            }
+            else
+            {
+                printf("Unknown command: %s\n", args[1]);
+            }
+
+            free(input);
+            continue;
+        }
+
+        if (strcmp(args[0], "fix") == 0)
+        {
+            if (args[1] == NULL || args[2] == NULL)
+            {
+                printf("Usage: fix <filename> <--auto | --manual>\n");
+                free(input);
+                continue;
+            }
+        
+            char command[2048];
+        
+            sprintf(command,
+                "./venv/bin/python fix_code.py \"%s\" \"%s\"",
+                args[1], args[2]);
+            
+            system(command);
+            
+            free(input);
+            continue;
+        }
+
+        if (strcmp(args[0], "ai") == 0)
+        {
+            if (args[1] == NULL)
+            {
+                printf("Usage: ai \"your command\"\n");
+                free(input);
+                continue;
+            }
+        
+            char ai_command[2048];
+        
+            // Call Python and store output in temp file
+            sprintf(ai_command,
+                "./venv/bin/python nlp_to_cmd.py \"%s\" > .ai_cmd.txt",
+                input + 3);
+            
+            system(ai_command);
+            
+            // Read generated command
+            FILE *fp = fopen(".ai_cmd.txt", "r");
+            if (!fp)
+            {
+                perror("Error reading AI output");
+                free(input);
+                continue;
+            }
+        
+            char generated_cmd[1024];
+            fgets(generated_cmd, sizeof(generated_cmd), fp);
+            fclose(fp);
+        
+            // Remove newline
+            generated_cmd[strcspn(generated_cmd, "\n")] = 0;
+        
+            if (strlen(generated_cmd) == 0)
+            {
+                printf("AI could not generate command.\n");
+                free(input);
+                continue;
+            }
+        
+            printf("🤖 Suggested Command: %s\n", generated_cmd);
+        
+            // Confirmation step
+            printf("⚠️ Do you want to execute this? (Y/N): ");
+            char choice;
+            scanf(" %c", &choice);
+            getchar(); // clear buffer
+        
+            if (choice == 'Y' || choice == 'y')
+            {
+                printf("Executing...\n");
+                system(generated_cmd);
+            }
+            else
+            {
+                printf("Cancelled.\n");
+            }
+        
+            free(input);
+            continue;
+        }
+
+        if (strcmp(args[0], "explain") == 0)
+        {
+            if (args[1] == NULL)
+            {
+                printf("Usage: explain <filename> [--short | --detailed]\n");
+                free(input);
+                continue;
+            }
+        
+            char command[2048];
+        
+            if (args[2] != NULL)
+            {
+                sprintf(command,
+                    "./venv/bin/python explain_code.py \"%s\" \"%s\"",
+                    args[1], args[2]);
+            }
+            else
+            {
+                sprintf(command,
+                    "./venv/bin/python explain_code.py \"%s\"",
+                    args[1]);
+            }
+        
+            system(command);
+        
+            free(input);
+            continue;
+        }
+
         /*--------------------------------
             Ai Agent code
         ----------------------------------*/
@@ -255,22 +390,20 @@ int main()
         if (strcmp(args[0], "code") == 0)
         {
             char problem[1024];
-
+        
             printf("Enter problem statement:\n");
             fgets(problem, sizeof(problem), stdin);
-
+        
             problem[strcspn(problem, "\n")] = 0;
-
+        
             char command[2048];
-
+        
             sprintf(command,
-                    "./venv/bin/python ai-agent.py \"%s\" > generated_code.txt",
-                    problem);
-
+                "./venv/bin/python ai-agent.py \"%s\"",
+                problem);
+            
             system(command);
-
-            printf("Code generated and saved to generated_code.txt\n");
-
+            
             free(input);
             continue;
         }
@@ -340,12 +473,13 @@ int main()
             continue;
         }
 
+        
         /* -------------------------------
-           Execute normal Linux command
+        Execute normal Linux command
         --------------------------------*/
-
+        
         pid_t pid = fork();
-
+        
         if (pid < 0)
         {
             perror("Fork failed");
@@ -362,6 +496,7 @@ int main()
         {
             wait(NULL);
         }
+        
 
         free(input);
     }

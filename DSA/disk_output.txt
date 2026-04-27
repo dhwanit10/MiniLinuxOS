@@ -1,0 +1,6 @@
+SCAN
+Seek Sequence: 34.00 23.00 12.00 1.00 72.00 90.00 95.00 SCAN
+Total Seek Time: 298.00 ms
+
+
+

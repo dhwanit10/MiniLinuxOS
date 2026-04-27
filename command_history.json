@@ -1,0 +1,120 @@
+{
+  "pwd": {
+    "ls": 6,
+    "cd": 3
+  },
+  "ls": {
+    "cd": 6,
+    "cat": 4,
+    "rm": 3,
+    "nano": 2,
+    "touch": 2,
+    "git": 1
+  },
+  "cd": {
+    "ls": 8,
+    "pwd": 4
+  },
+  "mkdir": {
+    "cd": 6,
+    "ls": 5
+  },
+  "rmdir": {
+    "ls": 4
+  },
+  "touch": {
+    "nano": 5,
+    "cat": 3,
+    "ls": 2
+  },
+  "cat": {
+    "nano": 3,
+    "less": 2
+  },
+  "nano": {
+    "gcc": 4,
+    "g++": 3,
+    "python": 2
+  },
+  "rm": {
+    "ls": 5
+  },
+  "cp": {
+    "ls": 4
+  },
+  "mv": {
+    "ls": 4
+  },
+  "clear": {
+    "ls": 3
+  },
+  "gcc": {
+    "./a.out": 8
+  },
+  "g++": {
+    "./a.out": 7
+  },
+  "./a.out": {
+    "nano": 3,
+    "gcc": 2
+  },
+  "python": {
+    "nano": 3
+  },
+  "top": {
+    "kill": 2
+  },
+  "ps": {
+    "kill": 4
+  },
+  "kill": {
+    "ps": 2
+  },
+  "chmod": {
+    "./a.out": 3
+  },
+  "git status": {
+    "git add .": 10,
+    "git commit -m": 8,
+    "git pull": 4
+  },
+  "git add .": {
+    "git commit -m": 12
+  },
+  "git commit -m": {
+    "git push": 10
+  },
+  "git push": {
+    "git status": 5
+  },
+  "git pull": {
+    "git status": 4
+  },
+  "git clone": {
+    "cd": 6
+  },
+  "git init": {
+    "git add .": 6
+  },
+  "cpu fcfs": {
+    "cpu srtf": 3,
+    "cpu RR": 2
+  },
+  "cpu srtf": {
+    "cpu priority": 3
+  },
+  "cpu RR": {
+    "cpu fcfs": 2
+  },
+  "thread process": {
+    "cpu fcfs": 2
+  },
+  "code": {
+    "nano": 3,
+    "gcc": 4,
+    "g++": 3
+  },
+  "explain": {
+    "code": 2
+  }
+}
