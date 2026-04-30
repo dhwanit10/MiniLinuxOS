@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <time.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include "scheduling.h"
@@ -42,6 +43,18 @@ char *commands[] = {
     "RR",
     "priority",
     "exit",
+    "help",
+    "thread process",
+    "disk scheduling",
+    "page replacement",
+    "memory management",
+    "fix",
+    "ai",
+    "explain",
+    "code",
+    "gpt",
+    "process manager",
+    "myos",
     NULL};
 
 char *file_generator(const char *text, int state)
@@ -130,6 +143,141 @@ void parse_input(char *input, char *args[])
     args[i] = NULL;
 }
 
+/* =========================================================
+                    MYOS HELP SYSTEM
+========================================================= */
+
+void print_banner()
+{
+    printf("\n");
+
+    printf("███╗   ███╗██╗   ██╗ ██████╗ ███████╗\n");
+    printf("████╗ ████║╚██╗ ██╔╝██╔═══██╗██╔════╝\n");
+    printf("██╔████╔██║ ╚████╔╝ ██║   ██║███████╗\n");
+    printf("██║╚██╔╝██║  ╚██╔╝  ██║   ██║╚════██║\n");
+    printf("██║ ╚═╝ ██║   ██║   ╚██████╔╝███████║\n");
+    printf("╚═╝     ╚═╝   ╚═╝    ╚═════╝ ╚══════╝\n");
+
+    printf("\n");
+    printf("═══════════════════════════════════════════════════════════════\n");
+    printf("             MYOS TERMINAL - COMMAND CENTER\n");
+    printf("═══════════════════════════════════════════════════════════════\n");
+
+    time_t t;
+    time(&t);
+
+    printf(" Session Started : %s", ctime(&t));
+
+    printf(" Features:\n");
+    printf("   • Native Linux Command Execution\n");
+    printf("   • CPU Scheduling Visualizer\n");
+    printf("   • Disk Scheduling Algorithms\n");
+    printf("   • Page Replacement Algorithms\n");
+    printf("   • Memory Management Simulation\n");
+    printf("   • AI Command Generator\n");
+    printf("   • AI Code Fixer & Explainer\n");
+    printf("   • GPT Interactive Chat Mode\n");
+    printf("   • Process & Thread Visualization\n");
+
+    printf("═══════════════════════════════════════════════════════════════\n");
+    printf(" Type 'help' to view all available MYOS commands.\n");
+    printf(" Linux commands like ls, pwd, mkdir, nano, cat, etc also work.\n");
+    printf("═══════════════════════════════════════════════════════════════\n\n");
+}
+
+
+/* =========================================================
+                    HELP COMMAND
+========================================================= */
+
+void show_help()
+{
+    printf("\n");
+
+    printf("╔══════════════════════════════════════════════════════════════╗\n");
+    printf("║                     MYOS HELP CENTER                         ║\n");
+    printf("╚══════════════════════════════════════════════════════════════╝\n");
+
+    printf("\n");
+
+    printf("───────────────────────────────────────────────────────────────\n");
+    printf(" BASIC LINUX COMMANDS (All Original Linux Commands Supported)\n");
+    printf("───────────────────────────────────────────────────────────────\n");
+
+    printf(" ls                 -> List files and folders\n");
+    printf(" pwd                -> Show current directory\n");
+    printf(" cd <dir>           -> Change directory\n");
+    printf(" mkdir <name>       -> Create folder\n");
+    printf(" rmdir <name>       -> Remove folder\n");
+    printf(" touch <file>       -> Create file\n");
+    printf(" cat <file>         -> View file contents\n");
+    printf(" rm <file>          -> Delete file\n");
+    printf(" nano <file>        -> Open nano editor\n");
+    printf(" clear              -> Clear terminal screen\n");
+    printf(" git                -> Git commands supported\n");
+
+    printf("\n");
+
+    printf("───────────────────────────────────────────────────────────────\n");
+    printf(" CPU SCHEDULING MODULE\n");
+    printf("───────────────────────────────────────────────────────────────\n");
+
+    printf(" cpu fcfs           -> Run FCFS Scheduling Algorithm\n");
+    printf(" cpu srtf           -> Run SRTF Scheduling Algorithm\n");
+    printf(" cpu RR             -> Run Round Robin Scheduling\n");
+    printf(" cpu priority       -> Run Priority Scheduling\n");
+
+    printf("\n");
+
+    printf("───────────────────────────────────────────────────────────────\n");
+    printf(" THREAD & PROCESS MODULE\n");
+    printf("───────────────────────────────────────────────────────────────\n");
+
+    printf(" thread process     -> Process vs Thread Visualization\n");
+    printf(" process manager    -> Launch Process Manager System\n");
+
+    printf("\n");
+
+    printf("───────────────────────────────────────────────────────────────\n");
+    printf(" MEMORY & STORAGE MODULES\n");
+    printf("───────────────────────────────────────────────────────────────\n");
+
+    printf(" disk scheduling    -> Disk Scheduling Simulator\n");
+    printf(" page replacement   -> Page Replacement Algorithms\n");
+    printf(" memory management  -> Memory Management Simulator\n");
+
+    printf("\n");
+
+    printf("───────────────────────────────────────────────────────────────\n");
+    printf(" AI UTILITIES\n");
+    printf("───────────────────────────────────────────────────────────────\n");
+
+    printf(" ai \"task\"          -> Convert Natural Language to Command\n");
+    printf(" fix file --auto    -> Automatically Fix Source Code\n");
+    printf(" fix file --manual  -> Manual AI Guided Fixing\n");
+    printf(" explain file       -> Explain Source Code\n");
+    printf(" explain file --detailed -> Detailed Explanation\n");
+    printf(" code               -> AI Code Generator\n");
+    printf(" gpt                -> Interactive GPT Chat Mode\n");
+
+    printf("\n");
+
+    printf("───────────────────────────────────────────────────────────────\n");
+    printf(" SYSTEM COMMANDS\n");
+    printf("───────────────────────────────────────────────────────────────\n");
+
+    printf(" help               -> Open MYOS Help Center\n");
+    printf(" exit               -> Exit MYOS Terminal\n");
+
+    printf("\n");
+
+    printf("═══════════════════════════════════════════════════════════════\n");
+    printf("                     POWERED BY MYOS\n");
+    printf("═══════════════════════════════════════════════════════════════\n");
+
+    printf("\n");
+}
+
 
 /* -------------------------------
    Main shell
@@ -142,6 +290,8 @@ int main()
 
     /* Enable TAB completion */
     rl_attempted_completion_function = command_completion;
+
+    print_banner();
 
     while (1)
     {
@@ -164,6 +314,23 @@ int main()
         add_history(input);
 
         parse_input(input, args);
+
+        /* -------------------------------
+                  HELP COMMAND
+        --------------------------------*/
+
+        if (strcmp(args[0], "help") == 0)
+        {
+            show_help();
+            free(input);
+            continue;
+        }
+        if (strcmp(args[0], "myos") == 0)
+        {
+            print_banner();
+            free(input);
+            continue;
+        }
         
         if (strcmp(args[0], "exit") == 0)
         {
@@ -171,6 +338,7 @@ int main()
             free(input);
             break;
         }
+
 
         /* -------------------------------
            CD command
@@ -259,6 +427,46 @@ int main()
             else if (strcmp(args[1], "scheduling") == 0)
             {
                 system("./DSA/menu");
+            }
+            else
+            {
+                printf("Unknown command: %s\n", args[1]);
+            }
+
+            free(input);
+            continue;
+        }
+
+        if (strcmp(args[0], "page") == 0)
+        {
+
+            if (args[1] == NULL)
+            {
+                printf("Usage: page replacement\n");
+            }
+            else if (strcmp(args[1], "replacement") == 0)
+            {
+                system("./PRA/menu");
+            }
+            else
+            {
+                printf("Unknown command: %s\n", args[1]);
+            }
+
+            free(input);
+            continue;
+        }
+
+        if (strcmp(args[0], "memory") == 0)
+        {
+
+            if (args[1] == NULL)
+            {
+                printf("Usage: memory management\n");
+            }
+            else if (strcmp(args[1], "management") == 0)
+            {
+                system("./MM/menu");
             }
             else
             {

@@ -14,7 +14,8 @@ def agent():
     system_prompt = f"""
 You are a Linux command generator.
 
-Your task is to convert natural language into a SINGLE valid Linux shell command.
+Your task is to convert natural language into a valid Linux shell command.
+generate commands on user input, your understanding, and user context. 
 
 STRICT RULES (MUST FOLLOW):
 - Output ONLY the command

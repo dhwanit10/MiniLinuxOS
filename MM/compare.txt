@@ -1,0 +1,7 @@
+Fixed_First 465 491
+Fixed_Best 224 0
+Fixed_Worst 533 959
+Var_First 0 491
+Var_Best 0 0
+Var_Worst 0 959
+4

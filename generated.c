@@ -3,17 +3,17 @@
 
 struct Node {
     int data;
-    struct Node* next; // Renamed from next1 for clarity and convention
+    struct Node* next;
 };
 
 void insertAtFront(struct Node** head_ref, int new_data) {
     struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
     if (new_node == NULL) {
-        perror("Memory allocation failed"); // Use perror for better error reporting
-        exit(EXIT_FAILURE); // Exit program on allocation failure
+        perror("Memory allocation failed");
+        exit(EXIT_FAILURE);
     }
     new_node->data = new_data;
-    new_node->next = (*head_ref); // Use the renamed 'next' pointer
+    new_node->next = (*head_ref);
     (*head_ref) = new_node;
 }
 
@@ -28,18 +28,17 @@ int main() {
     struct Node* current = head;
     while (current != NULL) {
         printf("%d ", current->data);
-        current = current->next; // Use the renamed 'next' pointer
+        current = current->next;
     }
     printf("\n");
 
-    // Free allocated memory
     current = head;
     while (current != NULL) {
         struct Node* temp = current;
-        current = current->next; // Use the renamed 'next' pointer
+        current = current->next;
         free(temp);
     }
-    head = NULL; // Ensure head is NULL after freeing
+    head = NULL;
 
     return 0;
 }
