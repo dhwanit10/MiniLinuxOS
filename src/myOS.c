@@ -267,7 +267,9 @@ void show_help()
     printf("───────────────────────────────────────────────────────────────\n");
 
     printf(" help               -> Open MYOS Help Center\n");
+    printf(" myos               -> Open MYOS Termina Welcome Pagel\n");
     printf(" exit               -> Exit MYOS Terminal\n");
+
 
     printf("\n");
 
