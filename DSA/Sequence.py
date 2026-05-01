@@ -61,6 +61,6 @@ def plot_all(data):
     plt.show()
 
 
-data = parse_file("disk_output.txt")
+data = parse_file("DSA/disk_output.txt")
 print("DEBUG:", data)
 plot_all(data)
