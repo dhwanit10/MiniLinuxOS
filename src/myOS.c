@@ -55,6 +55,11 @@ char *commands[] = {
     "gpt",
     "process manager",
     "myos",
+    "sync",
+    "dining",
+    "producer",
+    "reader",
+    "banker",
     NULL};
 
 char *file_generator(const char *text, int state)
@@ -248,6 +253,18 @@ void show_help()
 
     printf("\n");
 
+    printf("\n");
+
+    printf("───────────────────────────────────────────────────────────────\n");
+    printf(" SYNCHRONIZATION MODULE\n");
+    printf("───────────────────────────────────────────────────────────────\n");
+
+    printf(" sync menu         -> Open Synchronization Module\n");
+    printf(" dining            -> Run Dining Philosopher Problem\n");
+    printf(" producer           -> Run Producer Consumer Problem\n");
+    printf(" reader             -> Run Reader Writer Problem\n");
+    printf(" banker             -> Run Banker's Algorithm\n");
+
     printf("───────────────────────────────────────────────────────────────\n");
     printf(" AI UTILITIES\n");
     printf("───────────────────────────────────────────────────────────────\n");
@@ -415,6 +432,29 @@ int main()
                 printf("Unknown command: %s\n", args[1]);
             }
 
+            free(input);
+            continue;
+        }
+
+        /*--------------------------------
+             Synchronization Module
+        ----------------------------------*/
+
+        if (strcmp(args[0], "sync") == 0)
+        {
+            if (args[1] == NULL)
+            {
+                printf("Usage: sync menu\n");
+            }
+            else if (strcmp(args[1], "menu") == 0)
+            {
+                system("./SYNC/sync_menu");
+            }
+            else
+            {
+                printf("Unknown command: %s\n", args[1]);
+            }
+        
             free(input);
             continue;
         }
