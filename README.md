@@ -104,14 +104,35 @@ docker run -it myos_image
 - If AI scripts need API keys, add them to a `.env` file (see `chat-gpt.py`, `ai-agent.py`, `explain_code.py`) with a key named `api_key`.
 - For development, keep `venv/` in `.gitignore` (already ignored).
 
+**Environment (.env) & AI keys**
+- Create a `.env` file in the project root to provide secrets used by AI helpers.
+- Required variable:
+
+```
+api_key=YOUR_GEMINI_API_KEY_HERE
+```
+
+- Example: create and edit `.env`:
+
+```bash
+cd /path/to/MiniLinuxOS
+printf "api_key=YOUR_GEMINI_API_KEY_HERE\n" > .env
+```
+
+- Security: Do NOT commit `.env` to git. The repository already ignores `venv/`, but add `.env` to `.gitignore` if you store secrets.
+
+**Python dependencies**
+- A minimal `requirements.txt` is provided at `scripts/requirements.txt`. Install with:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r scripts/requirements.txt
+```
+
 **Contributing**
 - Improve algorithms inside `src/scheduling/`, visualizers in `MM/`, `PRA/`, `DSA/` directories, or enhance AI helpers in the Python scripts in the repo root.
 
 **License**
 - This project is provided as-is for learning and experimentation. Add an appropriate license if you plan to publish.
 
----
-
-If you'd like, I can:
-- Add a `requirements.txt` with the observed Python dependencies,
-- Add a small `run.sh` wrapper for Linux or a `docker-compose.yml` for development.
