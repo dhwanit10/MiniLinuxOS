@@ -1,4 +1,7 @@
-FIFO 10 2 0.17
-LRU 8 4 0.33
-OPTIMAL 6 6 0.50
-2
+Fixed_First 175 175
+Fixed_Best 175 175
+Fixed_Worst 175 175
+Var_First 0 0
+Var_Best 0 50
+Var_Worst 0 0
+3

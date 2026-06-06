@@ -1,40 +1,4 @@
-FCFS
-Seek Sequence: 2.00 45.00 78.00 34.00 90.00 FCFS
-Total Seek Time: 204.00 ms
-
-
-
 SSTF
-Seek Sequence: 30.00 -> 34.00 -> 45.00 -> 78.00 -> 90.00 -> 2.00 
-Total Seek Time: 148.00 ms
+Seek Sequence: 50.00 -> 45.00 -> 23.00 -> 12.00 -> 3.00 -> 90.00 
+Total Seek Time: 268.00 ms
 
-SCAN
-Seek Sequence: 34.00 45.00 78.00 90.00 100.00 2.00 SCAN
-Total Seek Time: 336.00 ms
-
-
-
-LOOK
-Seek Sequence: 34.00 45.00 78.00 90.00 2.00 LOOK
-Total Seek Time: 296.00 ms
-
-
-Total Tracks Moved: 148.00
-Seek Time per Track: 2.00 ms
-Total Seek Time: 296.00 ms
-Average Seek Time: 59.20 ms
-
-C-SCAN
-Seek Sequence: 34.00 45.00 78.00 90.00 100.00 1.00 2.00 C-SCAN
-Total Seek Time: 340.00 ms
-
-
-
-C-LOOK
-Seek Sequence: 34.00 45.00 78.00 90.00 2.00 C-LOOK
-Total Seek Time: 296.00 ms
-
-
-Total Tracks: 148.00
-Total Seek Time: 296.00 ms
-Average Seek Time: 59.20 ms

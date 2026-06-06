@@ -48,6 +48,10 @@ int main() {
 
     logFile = fopen("./SYNC/dining_log.txt", "w");
 
+    system("./venv/bin/python ./SYNC/dining_visual.py &");
+
+    sleep(1);
+
     pthread_t threads[MAX];
     int ids[MAX];
 
@@ -88,6 +92,6 @@ int main() {
     printf("\nSimulation Completed Successfully.\n");
 
     fclose(logFile);
-    system("python3 ./SYNC/dining_visual.py");
+
     return 0;
 }

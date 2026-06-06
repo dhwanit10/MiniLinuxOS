@@ -55,7 +55,7 @@ char *commands[] = {
     "gpt",
     "process manager",
     "myos",
-    "sync",
+    "sync menu",
     "dining",
     "producer",
     "reader",
@@ -260,10 +260,6 @@ void show_help()
     printf("───────────────────────────────────────────────────────────────\n");
 
     printf(" sync menu         -> Open Synchronization Module\n");
-    printf(" dining            -> Run Dining Philosopher Problem\n");
-    printf(" producer           -> Run Producer Consumer Problem\n");
-    printf(" reader             -> Run Reader Writer Problem\n");
-    printf(" banker             -> Run Banker's Algorithm\n");
 
     printf("───────────────────────────────────────────────────────────────\n");
     printf(" AI UTILITIES\n");

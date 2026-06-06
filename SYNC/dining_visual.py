@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('TkAgg')
+
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
@@ -58,6 +61,13 @@ def update(frame):
 
     ax.axis('off')
 
-ani = animation.FuncAnimation(fig, update, interval=1000)
+ani = animation.FuncAnimation(
+    fig,
+    update,
+    interval=500,
+    cache_frame_data=False
+)
+
+plt.tight_layout()
 
 plt.show()

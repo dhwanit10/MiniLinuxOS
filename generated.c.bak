@@ -1,9 +1,7 @@
-#include <stdiahsgdjho.h>
+#include <stdio.h>
 
-int main() {
-    int a, b;
-    scanf("%d %d", &a, &b);
-    printf("%d", a + b);
+int mainxh() {
+    printf("hello\n");
     return 0;
 }
-jhsdjhaskjdh
+ndjcjshdc

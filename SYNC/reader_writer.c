@@ -5,6 +5,8 @@
 
 #define MAX 10
 
+FILE *logFile;
+
 int read_count = 0;
 int data = 0;
 
@@ -32,6 +34,13 @@ void* reader(void* arg) {
         // Reading
         printf("Reader %d is READING data = %d\n", id, data);
         sleep(1);
+
+        fprintf(logFile,
+        "READER %d %d\n",
+        id,
+        data);
+
+        fflush(logFile);
 
         // Exit section
         pthread_mutex_lock(&mutex);
@@ -61,6 +70,13 @@ void* writer(void* arg) {
         printf("Writer %d is WRITING data = %d\n", id, data);
         sleep(2);
 
+        fprintf(logFile,
+        "WRITER %d %d\n",
+        id,
+        data);
+
+        fflush(logFile);
+
         pthread_mutex_unlock(&wrt);
 
         sleep(1);
@@ -70,6 +86,11 @@ void* writer(void* arg) {
 }
 
 int main() {
+
+    logFile = fopen("./SYNC/readerwriter_log.txt", "w");
+    
+    system("venv/bin/python ./SYNC/readerwriter_visual.py &");
+    sleep(1);
 
     pthread_t r_threads[MAX], w_threads[MAX];
     int r_ids[MAX], w_ids[MAX];
@@ -116,6 +137,8 @@ int main() {
     }
 
     printf("\nSimulation Completed Successfully.\n");
+
+    fclose(logFile);
 
     return 0;
 }

@@ -35,6 +35,13 @@ void* producer(void* arg) {
         buffer[in] = item;
         printf("Producer %d produced: %d\n", id, item);
 
+        fprintf(logFile,"PRODUCED %d %d %d\n",
+        id,
+        item,
+        count);
+
+        fflush(logFile);
+
         in = (in + 1) % size;
         count++;
 
@@ -62,6 +69,14 @@ void* consumer(void* arg) {
         int item = buffer[out];
         printf("Consumer %d consumed: %d\n", id, item);
 
+        fprintf(logFile,
+        "CONSUMED %d %d %d\n",
+        id,
+        item,
+        count);
+
+fflush(logFile);
+
         out = (out + 1) % size;
         count--;
 
@@ -76,6 +91,11 @@ void* consumer(void* arg) {
 
 
 int main() {
+
+    logFile = fopen("./SYNC/producer_log.txt", "w");
+    
+    system("venv/bin/python ./SYNC/producer_visual.py &");
+    sleep(1);
 
     pthread_t p_threads[MAX], c_threads[MAX];
     int p_ids[MAX], c_ids[MAX];
@@ -129,6 +149,8 @@ int main() {
     }
 
     printf("\nSimulation Completed Successfully.\n");
+
+    fclose(logFile);
 
     return 0;
 }

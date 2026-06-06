@@ -1,9 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
 
 #define MAX 10
+FILE *logFile;
 
 int main() {
 
+    logFile = fopen("./SYNC/banker_log.txt", "w");
+    system("venv/bin/python ./SYNC/banker_visual.py &");
+    sleep(1);
+    
     int n, m; // n = processes, m = resources
     int alloc[MAX][MAX], max[MAX][MAX], need[MAX][MAX];
     int avail[MAX];
@@ -67,6 +75,8 @@ int main() {
                     }
 
                     safeSeq[count++] = i;
+                    fprintf(logFile, "PROCESS %d\n", i);
+                    fflush(logFile);
                     finish[i] = 1;
                     found = 1;
                 }
@@ -86,6 +96,8 @@ int main() {
     }
 
     printf("\n");
+
+    fclose(logFile);
 
     return 0;
 }
